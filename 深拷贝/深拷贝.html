@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        /*根据查阅资料，知道深拷贝是多层拷贝，不拷贝他的栈值，而是深入内部，
+        把本值拷贝出来，甚至涉及了原型链等，很多看不到的知识。所以想实现真
+        正没有副作用的深拷贝，在简单的方法下。
+        我就想把他的值，逐渐读入一个新的对象中，这个对象是类似栈的存在，但是可以储存对象的键和数组的值。
+        首先我们要判断他的类型，是对象的话，就是object型，但是null也是object型，所以要排除他，
+        之后如果他是多层对象或数组嵌套，则我们就再进行一次递归深入，直到底层。
+        最后输出，打印*/
+var user={
+'name':'nd',
+'age':'21',
+'height':'181cm',
+'friends':{
+  'name':'thf',
+  'age':'20',
+  'height':'179cm'
+}
+}
+function  copy(user){
+    var admin = {};//模仿一个栈
+    for(var key in  user){
+        if(typeof user[key] === "object"&&user[key]!=null){//判断其类型是否还是obj，且不是null值
+            admin[key] = copy(user[key]);//若是里边还有对象，则递归深入，深层拷贝
+        }else {
+            admin[key] = user[key];
+        }
+    }
+    user.weight='60kg'
+    return admin;
+}
+
+console.log(user);
+console.log(copy(user));
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
